@@ -19,6 +19,9 @@ dependencies:
   http: 0.12.0
   isolate: 2.0.2
 
+  native_plugin:
+    path: ../native_plugin
+
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2

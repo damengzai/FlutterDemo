@@ -1,11 +1,11 @@
 import 'dart:convert';
 
+import 'package:demo/utils/AES.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
-/**
- * 调用接口返回数据
- * */
+///调用接口返回数据
+
 
 class Stock {
   Stock(this.symbol, this.name, this.lastSale, this.marketCap,
@@ -45,6 +45,7 @@ class StockData extends ChangeNotifier {
     if(actuallyFetchData){
         _httpClient = http.Client();
         _fetchNextChunk();
+        _fetchData("prd.query.banner.list");
     }
   }
 
@@ -59,9 +60,22 @@ class StockData extends ChangeNotifier {
   }
   static const int _chunkCount = 30;
   int _nextChunk = 0;
-
+  String UrlHeader= "http://kbx.chuyunspace.com/router";
+  
   String _urlToFetch(int chunk) {
     return 'https://domokit.github.io/examples/stocks/data/stock_data_$chunk.json';
+  }
+  void _fetchData(String method) {
+
+//    Future<String> str = AES.encrype(sSrc);
+//
+//    pairs.add(new NameValuePair("params", str));
+
+
+    _httpClient.post(UrlHeader,body: {"method": method, "appKey": "00001", "v": "1.0", "sessionId":'', "paramsKey": "0-00001"}).then<void>((http.Response response) {
+      String result = response.body;
+      print(response.body);
+    });
   }
 
   void _fetchNextChunk() {
